@@ -18,6 +18,7 @@
 
 #include "Students.h"
 
+const int MAX_PASSWORD_LEN = 16;
 int class_number;
 int scoreStatus[30][5];
 enum IDENTIFY {TEACHER, STUDENT} identify;
@@ -37,7 +38,23 @@ void SetPos(int x, int y) {
     SetConsoleCursorPosition(tOut, tPos);
 }
 
+void getPassWord(char* tmp_password) {
+    char c = '\0';
+    char* pc = tmp_password;
+    int len = 0;
+    while ((c = getch()) != '\r') {
+        if (len >= 0 && len <= MAX_PASSWORD_LEN - 1 && c) {
+            *pc = c;
+            pc++;
+            len++;
+            wprintf(L"*");
+        }
+    }
+    *pc = '\0';
+}
+
 void init(int m) {
+init_label:
     class_number = m;
     phead = NULL;
     ptail = NULL;
@@ -59,7 +76,7 @@ void init(int m) {
         SetPos(10, 12);
         wprintf(L"输入密码：");
         char password[20];
-        scanf("%s", password);
+        getPassWord(password);
         if (strcmp(password, def_password) == 0) {
             identify = TEACHER;
         }
@@ -69,8 +86,8 @@ void init(int m) {
         SetPos(84, 2);
         wprintf(L"操作：");
         int i = 8;
-        while (i <= 42) {
-            SetPos(84, i - 4);
+        while (i <= 44) {
+            SetPos(84, i - 6);
             switch (i) {
                 case 8:
                     wprintf(L"1.输入学生信息");
@@ -122,6 +139,9 @@ void init(int m) {
                     break;
                 case 40:
                     wprintf(L"17.修改密码（仅admin）");
+                    break;
+                case 42:
+                    wprintf(L"18.退出登录");
                     break;
                 default:
                     wprintf(L"0.退出系统");
@@ -284,17 +304,20 @@ void init(int m) {
             SetPos(0, 6);
             wprintf(L"输入原密码：");
             char tmp[20];
-            scanf("%s", tmp);
+            getPassWord(tmp);
             if (strcmp(tmp, def_password) == 0) {
                 SetPos(0, 8);
-                wprintf(L"请输入新密码：");
-                scanf("%s", def_password);
+                wprintf(L"请输入新密码（小于等于16位）：");
+                getPassWord(def_password);
                 SetPos(0, 10);
                 wprintf(L"密码修改成功！");
             }
             else {
                 wprintf(L"密码错误！");
             }
+        }
+        else if (strcmp(str, "18") == 0) {
+            goto init_label;
         }
         else if (strcmp(str, "0") == 0) {
             exit(0);
@@ -308,20 +331,6 @@ void init(int m) {
         scanf("%c", &op);
         if (op == 'y' || op == 'Y') {
             exit(0);
-        }
-    }
-}
-
-void getPassWord(char* tmp_password) {
-    char c = '\0';
-    char* pc = tmp_password;
-    int len = 0;
-    while ((c = getch()) != '\r') {
-        if (len >= 0 && len <= MAX_PASSWORD_LEN - 1 && c) {
-            *pc = c;
-            pc++;
-            len++;
-            wprintf(L"*");
         }
     }
 }

@@ -25,6 +25,7 @@
 #include <locale.h>
 #include <stdbool.h>
 #include <string.h>
+#include <conio.h>
 
 typedef struct Node *pNode, Node;
 
