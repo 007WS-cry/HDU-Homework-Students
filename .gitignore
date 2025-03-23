@@ -1,0 +1,17 @@
+# IDE相关
+.idea/
+.vscode/
+
+# CMake相关
+cmake-build-debug/
+CMakeLists.txt
+
+# 项目文档
+.specstory/
+项目说明.docx
+
+# 编译输出
+*.exe
+*.obj
+*.o
+*.out
