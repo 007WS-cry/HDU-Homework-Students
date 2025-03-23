@@ -312,6 +312,20 @@ void init(int m) {
     }
 }
 
+void getPassWord(char* tmp_password) {
+    char c = '\0';
+    char* pc = tmp_password;
+    int len = 0;
+    while ((c = getch()) != '\r') {
+        if (len >= 0 && len <= MAX_PASSWORD_LEN - 1 && c) {
+            *pc = c;
+            pc++;
+            len++;
+            wprintf(L"*");
+        }
+    }
+}
+
 int getGrade(int score) {
     if (score >= 90) {
         return 0;
