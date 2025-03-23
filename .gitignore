@@ -15,3 +15,6 @@ CMakeLists.txt
 *.obj
 *.o
 *.out
+
+# 项目代码压缩包
+*.zip
